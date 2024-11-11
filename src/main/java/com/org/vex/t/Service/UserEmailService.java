@@ -19,6 +19,7 @@ public class UserEmailService {
     OtpService otpService;
 
     public String sendMail(String email) {
+        System.out.println(email);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setSubject("Otp for acccount verification:");

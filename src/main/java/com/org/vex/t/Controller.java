@@ -5,6 +5,8 @@ import com.org.vex.t.Entity.User;
 import com.org.vex.t.Service.OtpService;
 import com.org.vex.t.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:4200")
@@ -20,25 +22,27 @@ public class Controller {
     private OtpService otpService;
 
     @PostMapping("/Send_email")
-    public String SendMail(@RequestParam String email)
+    public ResponseEntity<String> SendMail(@RequestParam String email)
     {
-        return  userService.sendotp(email);
+        System.out.println(email);
+        return new ResponseEntity<>( userService.sendotp(email),HttpStatus.OK);
     }
 
     @PostMapping("/verify")
-    public String verifyOtp(@RequestParam String email, @RequestParam String otp) {
+    public ResponseEntity<String> verifyOtp(@RequestParam String email, @RequestParam String otp) {
+        System.out.println("VV"+email);
         boolean isVerified = otpService.verifyOtp(email, otp);
         if (isVerified) {
-            return "OTP verified successfully!";
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return "Invalid OTP.";
+            return  new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
     @PostMapping("/login")
-    public User login(@RequestParam String email)
+    public ResponseEntity<User> login(@RequestParam String email)
     {
-        return userService.login(email);
+        return new  ResponseEntity<>(userService.login(email), HttpStatus.OK);
     }
 
 
