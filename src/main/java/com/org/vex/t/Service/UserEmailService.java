@@ -34,5 +34,10 @@ public class UserEmailService {
 
 
 
+    public String send()
+    {
+        return null;
+    }
+
 
 }
